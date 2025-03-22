@@ -1,4 +1,4 @@
-# ThreatLog-AI-backend
+# ThreatLog-AI-AWS
 Proyecto para procesar y automatizar los logs:
 El siguiente proyecto que será utilizando Python consiste en procesar y automatizar todos los datos nuevos en S3, con Python se conectará a cada uno de los servicios de AWS que necesitamos para hacer la automatización de todo el proceso de los datos.
 
