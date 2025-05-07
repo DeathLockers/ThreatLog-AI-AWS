@@ -4,3 +4,6 @@ services:
     container_name: threatlog-ai-web
     restart: unless-stopped
     env_file: .env.web
+    ports:
+      - "80:80"
+      - "443:443"

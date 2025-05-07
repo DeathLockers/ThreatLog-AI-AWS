@@ -6,4 +6,4 @@ services:
     - broker
     env_file: .env.producer
     volumes:
-    - ${PRODUCER_LOGS_DATA}:/data
+    - ~/deathlockers/logs:/data
