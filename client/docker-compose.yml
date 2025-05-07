@@ -1,0 +1,9 @@
+services:
+  # Produce mensajes con los logs en archivos en ./producer_logs
+  log-producer:
+    image: ghcr.io/deathlockers/tlsender:main
+    depends_on:
+    - broker
+    env_file: .env.producer
+    volumes:
+    - ${PRODUCER_LOGS_DATA}:/data
