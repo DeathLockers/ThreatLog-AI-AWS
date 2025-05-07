@@ -18,7 +18,7 @@ echo "include:" > "$MASTER_COMPOSE_FILE"
 
 # Download the docker-compose.yml files for each component
 for name in api kafka client model web; do
-  url="${DOCKER_COMPOSE_TEMPLATE/<replace>/$name}"
+  url=$(echo "$DOCKER_COMPOSE_TEMPLATE" | sed "s|<replace>|$name|")
   curl -fsSL "$url" -o "${COMPOSE_INCLUDE_FOLDER}/${name}.yml"
   echo "- ${COMPOSE_INCLUDE_FOLDER}/${name}.yml" >> "$MASTER_COMPOSE_FILE"
 done
