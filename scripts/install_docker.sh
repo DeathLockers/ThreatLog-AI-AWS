@@ -19,3 +19,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 user=$(logname)  # gets the original logged-in user, even if you're sudo
 sudo usermod -aG docker $user
+
+echo "Docker installed and user '$user' added to the 'docker' group."
+echo "You must log out and back in for the group changes to take effect."
+echo "Or run: exec sg docker newgrp docker"

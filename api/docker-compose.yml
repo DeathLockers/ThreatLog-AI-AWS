@@ -1,9 +1,6 @@
 services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: javi98/threatlog-ai-api:1.0.0
+    image: ghcr.io/deathlockers/tlapi:master
     container_name: threatlog-ai-api
     restart: unless-stopped
     command: fastapi run app/main.py --host 0.0.0.0 --port 8000 # Production mode
