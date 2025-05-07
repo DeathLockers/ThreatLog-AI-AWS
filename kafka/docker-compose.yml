@@ -23,7 +23,7 @@ services:
           cpus: '0.5'
     depends_on: 
     - broker
-    emv_file: .env.kafka-ui
+    env_file: .env.kafka-ui
     ports: 
     - "8080:8080"
 
