@@ -25,9 +25,9 @@ HOME_DIR="$HOME/deathlockers"
 COMPOSE_INCLUDE_FOLDER="$HOME_DIR/include_compose_files"
 mkdir -p "$COMPOSE_INCLUDE_FOLDER"
 MASTER_COMPOSE_FILE="$HOME_DIR/docker-compose.yml"
-echo "include:" > "$MASTER_COMPOSE_FILE"
 
-# Dynamic folder, static file
+# Create the master docker-compose.yml file
+echo "include:" > "$MASTER_COMPOSE_FILE"
 for folder in api kafka client model web; do
   file="docker-compose.yml"
   url=$(echo "$DOCKER_COMPOSE_TEMPLATE" | sed "s|<folder>|$folder|" | sed "s|<file>|$file|")
@@ -39,7 +39,7 @@ for folder in api kafka client model web; do
   fi
 done
 
-# Static folder, dynamic file
+# Download env files
 folder="env_files"
 for file in .env.api .env.producer .env.broker .env.kafka-ui .env.predictor .env.web; do
   url=$(echo "$DOCKER_COMPOSE_TEMPLATE" | sed "s|<folder>|$folder|" | sed "s|<file>|$file|")
@@ -49,6 +49,19 @@ for file in .env.api .env.producer .env.broker .env.kafka-ui .env.predictor .env
   fi
 done
 
+# Setup env files
+# Generate a new JWT secret key
+jwt_secret_key="JWT_SECRET_KEY=$(openssl rand -hex 32)"
+env_file="${COMPOSE_INCLUDE_FOLDER}/.env.api"
+sed -i '/^JWT_SECRET_KEY=""/d' "$env_file"
+
+# Insert the new key at line 11
+sed -i "11i$jwt_secret_key" "$env_file"
+
+
 # Run Docker Compose
-cd "$COMPOSE_INCLUDE_FOLDER" || exit 1
+cd "$COMPOSE_INCLUDE_FOLDER"
 docker compose up -d
+
+# Initialize the database
+docker exec threatlog-ai-api python -m app.db.migration

@@ -7,6 +7,8 @@ services:
     env_file: .env.api
     depends_on:
       - db
+    ports:
+    - "8000:8000"
   db:
     image: mariadb:11.6.2
     container_name: threatlog-ai-db
