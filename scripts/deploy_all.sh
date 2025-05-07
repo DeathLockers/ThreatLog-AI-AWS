@@ -54,10 +54,11 @@ done
 jwt_secret_key="JWT_SECRET_KEY=$(openssl rand -hex 32)"
 env_file="${COMPOSE_INCLUDE_FOLDER}/.env.api"
 sed -i '/^JWT_SECRET_KEY=""/d' "$env_file"
-
-# Insert the new key at line 11
 sed -i "11i$jwt_secret_key" "$env_file"
 
+# Fill .env.web with host
+host=$(curl -s https://ifconfig.me)
+sed -i "s|<host>|$host|g" "${COMPOSE_INCLUDE_FOLDER}/.env.web"
 
 # Run Docker Compose
 cd "$COMPOSE_INCLUDE_FOLDER"
