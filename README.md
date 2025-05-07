@@ -10,5 +10,5 @@ curl -sSL "https://raw.githubusercontent.com/DeathLockers/ThreatLog-AI-AWS/maste
 ## Setup project script
 
 ``` # Shell command to install docker
-curl -sSL "https://raw.githubusercontent.com/DeathLockers/ThreatLog-AI-AWS/master/scripts/deploy_all.sh" | sudo sh
+curl -sSL "https://raw.githubusercontent.com/DeathLockers/ThreatLog-AI-AWS/master/scripts/deploy_all.sh" | sh
 ```
