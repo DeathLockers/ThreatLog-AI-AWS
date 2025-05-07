@@ -1,0 +1,40 @@
+services:
+  # Kafka broker
+  broker:
+    image: apache/kafka-native
+    container_name: kafka
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+          cpus: '0.8'
+    env_file: .env.broker
+    
+  # UI para ver administrar kafka
+  kafka-ui:
+    image: ghcr.io/kafbat/kafka-ui:latest
+    container_name: kafka-ui
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+          cpus: '0.5'
+    depends_on: 
+    - broker
+    emv_file: .env.kafka-ui
+    ports: 
+    - "8080:8080"
+
+  # Crea topics nuevos al iniciar el contenedor
+  kafka-init-topics:
+    image: confluentinc/cp-kafka:7.2.1
+    container_name: kafka-scripts
+    depends_on:
+      - broker
+    command: "bash -c 'echo Waiting for Kafka to be ready... && \
+               cub kafka-ready -b broker:9093 1 30 && \
+               kafka-topics --create --topic customer_logs --partitions 1 --replication-factor 1 --if-not-exists --bootstrap-server broker:9093 && \
+               kafka-topics --create --topic predicted_logs --partitions 1 --replication-factor 1 --if-not-exists --bootstrap-server broker:9093'"
+  

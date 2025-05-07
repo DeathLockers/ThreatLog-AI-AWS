@@ -1,0 +1,6 @@
+services:
+  web:
+    image: ghcr.io/deathlockers/tlweb:master
+    container_name: threatlog-ai-predictor
+    restart: unless-stopped
+    env_file: .env.web
