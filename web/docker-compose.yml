@@ -1,6 +1,6 @@
 services:
-  model-predictor:
-    image: ghcr.io/deathlockers/tlmodelserver:main
+  web:
+    image: ghcr.io/deathlockers/tlweb:master
     container_name: threatlog-ai-predictor
     restart: unless-stopped
-    env_file: .env.predictor
+    env_file: .env.web
