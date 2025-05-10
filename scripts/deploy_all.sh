@@ -66,4 +66,4 @@ docker compose up -d
 
 # Initialize the database
 echo "Run the following command to initialize the database:"
-ehco "docker exec threatlog-ai-api python -m app.db.migration"
+echo "docker exec threatlog-ai-api python -m app.db.migration"
